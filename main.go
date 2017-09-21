@@ -55,7 +55,7 @@ func main() {
 	//
 	fmt.Println(config.Listbase[0].Name)
 
-	bot, err := tgbotapi.NewBotAPI("423343625:AAEmCa6ebhsBAVIbEQV8w31WICTAK070sq4")
+	bot, err := tgbotapi.NewBotAPI("TOKEN")
 	if err != nil {
 		log.Panic(err)
 	}
