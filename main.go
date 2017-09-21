@@ -6,29 +6,56 @@ import (
 	"fmt"
 	"encoding/json"
 	"os"
-
-
+	//"go/token"
 )
+
+//Создание массива
 type Config struct {
-	Database struct{
-		Host string `json:"host"`
-	}`json:"database"`
-	Host string `json:"host"`
+	Listbase []Listbase
 }
-func loadConfiguration(filename string)(Config, error)  {
+type Listbase struct {
+	Name  string `json:"name"`
+	List1 List1  `json:"list1"`
+	List2 List2  `json:"list2"`
+	List3 List3  `json:"list3"`
+}
+type List1 struct {
+	List_name   string `json:"list_name"`
+	List_text   string `json:"list_text"`
+	List_status string `json:"list_status"`
+}
+type List2 struct {
+	List_name   string `json:"list_name"`
+	List_text   string `json:"list_text"`
+	List_status string `json:"list_status"`
+}
+type List3 struct {
+	List_name   string `json:"list_name"`
+	List_text   string `json:"list_text"`
+	List_status string `json:"list_status"`
+}
+
+//здание config
+func loadConfiguration(filename string) (Config, error) {
 	var config Config
 	configFile, err := os.Open(filename)
-	defer  configFile.Close()
+	defer configFile.Close()
+	jsonParser := json.NewDecoder(configFile)
+	err = jsonParser.Decode(&config)
 	if err != nil {
 		return config, err
 	}
-	jsonParser:=json.NewDecoder(configFile)
-	err = jsonParser.Decode(&config)
-	return config,err
+	return config, err
 }
 
+//p1:= Person{"Sam", 20, []string{}}
+
 func main() {
-	bot, err := tgbotapi.NewBotAPI("TOKEN")
+	config, _ := loadConfiguration("config.json")
+	//
+	fmt.Println(config.Listbase[0].Name)
+
+	bot, err := tgbotapi.NewBotAPI("423343625:AAEmCa6ebhsBAVIbEQV8w31WICTAK070sq4")
 	if err != nil {
 		log.Panic(err)
 	}
@@ -42,12 +69,12 @@ func main() {
 			continue
 		}
 		log.Print("[%s] %s", update.Message.From.UserName, update.Message.Text)
-		if update.Message.Text=="/start"{
+		if update.Message.Text == "/start" {
 			var reply string
 			if update.Message.From.UserName != "" {
 				// В чат вошел новый пользователь
 				// Поприветствуем его
-				reply = fmt.Sprintf(`Привет @%s! Я тут слежу за порядком. Веди себя хорошо.`,
+				reply = fmt.Sprintf(`Привет @%s! Я тут слежу за порядком. Веди себя хорошо. Удинственная командакоторую я сейчас пытаюсь выполнить это /create, но и она не очень то и хорошо работает!`,
 					update.Message.From.UserName)
 			}
 			if reply != "" {
@@ -58,7 +85,7 @@ func main() {
 			}
 			continue
 		}
-		if update.Message.Text=="/create"{
+		if update.Message.Text == "/create" {
 			var reply string
 			if update.Message.From.UserName != "" {
 				// В чат вошел новый пользователь
@@ -72,13 +99,33 @@ func main() {
 				// и отправляем его
 				bot.Send(msg)
 			}
-			if update.Message.Text!="" {
+			if update.Message.Text != "" {
 
 			}
 			continue
 		}
-		//msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
-		//bot.Send(msg)
+		if update.Message.Text == "name" {
+			var reply string
+			if update.Message.From.UserName != "" {
+				reply = fmt.Sprintf(config.Listbase[0].Name, config.Listbase[0].List1.List_name)
+			}
+			if reply != "" {
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, reply)
+				bot.Send(msg)
+			}
+			continue
+		}
+		if update.Message.Text == "dela" {
+			var reply string
+			if update.Message.From.UserName != "" {
+				dela := config.Listbase[0].List1.List_name
+				reply = fmt.Sprintf(dela, config.Listbase[0].List1.List_name)
+			}
+			if reply != "" {
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, reply)
+				bot.Send(msg)
+			}
+			continue
+		}
 	}
 }
-

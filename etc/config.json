@@ -1,0 +1,40 @@
+{
+  "listbase": [
+    {
+      "name": "Vwreturn06",   //string
+      "list1": {              //List1
+        "list_name": "qwe1",  //string
+        "list_text": "qwe123",//string
+        "list_status": "done"//string
+      },
+      "list2": {
+        "list_name": "qwe2",
+        "list_text": "qwe123",
+        "list_status": "Performed"
+      },
+      "list3": {
+        "list_name": "qwe3",
+        "list_text": "qwe123",
+        "list_status": "not_started"
+      }
+    },
+    {
+      "name": "Fainnac",
+      "list1": {
+        "list_name": "qwe1",
+        "list_text": "qwe123",
+        "list_status": "done"
+      },
+      "list2": {
+        "list_name": "qwe2",
+        "list_text": "qwe123",
+        "list_status": "Performed"
+      },
+      "list3": {
+        "list_name": "qwe3",
+        "list_text": "qwe123",
+        "list_status": "not_started"
+      }
+    }
+  ]
+}
